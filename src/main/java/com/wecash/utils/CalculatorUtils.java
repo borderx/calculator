@@ -1,5 +1,6 @@
 package com.wecash.utils;
 
+import java.util.UUID;
 import java.util.regex.Pattern;
 
 /**
@@ -11,7 +12,14 @@ public class CalculatorUtils {
         return Pattern.matches(regix, str);
     }
 
+    public static String getRandomKey() {
+        return UUID.randomUUID().toString().replace("-", "");
+    }
+
     public static void main(String[] args) {
         System.out.println(CalculatorUtils.isNumber("-3526521."));
+        System.out.println(CalculatorUtils.getRandomKey());
+        System.out.println(CalculatorUtils.getRandomKey());
+
     }
 }

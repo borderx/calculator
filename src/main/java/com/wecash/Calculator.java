@@ -5,11 +5,13 @@ package com.wecash;
  */
 
 import com.alibaba.fastjson.JSON;
+import com.wecash.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 
 import java.util.Map;
 import java.util.Stack;
+import java.util.UUID;
 
 /**
  * Created by hh on 15/7/8.
@@ -83,7 +85,13 @@ public class Calculator {
     private boolean newNumber(StringBuilder word) {
         boolean newAdded = false;
         if (word.length() > 0) {
-            numberStack.push(word.toString());
+            if(CalculatorUtils.isNumber(word.toString())) {
+                String key = CalculatorUtils.getRandomKey();
+                params.put(key, new BigDecimal(word.toString()));
+                numberStack.push(key);
+            } else {
+                numberStack.push(word.toString());
+            }
             word.delete(0, word.length());
             newAdded = true;
         }

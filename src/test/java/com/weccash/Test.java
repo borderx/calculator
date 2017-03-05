@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class Test {
     public static void main(String[] args) throws Exception {
-        String expression = "consumeAmount * rate * (periods + periods*rate)";
+        String expression = "consumeAmount*0.01 * rate * (periods + 3)";
         Map<String, BigDecimal> params = new HashMap<String, BigDecimal>();
         params.put("consumeAmount", new BigDecimal(10000));
         params.put("rate", new BigDecimal(0.5));

@@ -72,7 +72,7 @@ public enum Operator {
         }
 
         public BigDecimal compute(BigDecimal... ops) {
-            return ops[0].divide(ops[1]);
+            return ops[0].divide(ops[1], 20, BigDecimal.ROUND_HALF_UP);
         }
     }, BraLeft {
         public String getSymbol() {
