@@ -22,8 +22,7 @@ public enum Operator {
         public BigDecimal compute(BigDecimal... ops) {
             return ops[0].add(ops[1]);
         }
-    },
-    Minus {
+    }, Minus {
         public String getSymbol() {
             return "-";
         }
@@ -121,6 +120,25 @@ public enum Operator {
 
         public BigDecimal compute(BigDecimal... ops) {
             return ops[0].divideAndRemainder(ops[1])[1];
+        }
+    }, Power {
+        public String getSymbol() {
+            return "@";
+        }
+
+        public int getPri() {
+            return 1;
+        }
+
+        public int getOpCnt() {
+            return 2;
+        }
+
+        public BigDecimal compute(BigDecimal... ops) {
+            double arg1 = ops[0].doubleValue();
+            double arg2 = ops[1].doubleValue();
+            double res = Math.pow(arg1, arg2);
+            return BigDecimal.valueOf(res);
         }
     };
 
