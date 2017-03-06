@@ -1,4 +1,4 @@
-package com.wecash;
+package com.wecash.calculate;
 
 import java.math.BigDecimal;
 

@@ -1,8 +1,5 @@
-package com.wecash;
+package com.wecash.calculate;
 
-/**
- * Created by hh on 2017/2/27.
- */
 
 import com.alibaba.fastjson.JSON;
 import com.wecash.utils.CalculatorUtils;
@@ -11,10 +8,9 @@ import java.math.BigDecimal;
 
 import java.util.Map;
 import java.util.Stack;
-import java.util.UUID;
 
 /**
- * Created by hh on 15/7/8.
+ * Created by hh on 2017/2/27.
  */
 public class Calculator {
 

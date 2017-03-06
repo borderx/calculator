@@ -1,6 +1,6 @@
 package com.weccash;
 
-import com.wecash.Calculator;
+import com.wecash.calculate.Calculator;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
