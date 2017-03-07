@@ -1,11 +1,11 @@
-package com.wecash.calculate;
+package com.wecash.calculate.arithmetic;
 
 import java.math.BigDecimal;
 
 /**
- * Created by hh on 15/7/8.
+ * Created by hh on 17/3/7.
  */
-public enum Operator {
+public enum ArithmeticOperator {
     Add {
         public String getSymbol() {
             return "+";
@@ -151,8 +151,8 @@ public enum Operator {
     public abstract BigDecimal compute(BigDecimal... ops);
 
 
-    public static Operator toOperator(char op) {
-        for(Operator o : values()) {
+    public static ArithmeticOperator toOperator(char op) {
+        for(ArithmeticOperator o : values()) {
             if(o.getSymbol().equals(String.valueOf(op))) {
                 return o;
             }

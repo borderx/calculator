@@ -1,6 +1,6 @@
 package com.weccash;
 
-import com.wecash.calculate.Calculator;
+import com.wecash.calculate.arithmetic.ArithmeticCalculator;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -16,7 +16,7 @@ public class Test {
         params.put("consumeAmount", new BigDecimal(10));
         params.put("rate", new BigDecimal(0.5));
         params.put("periods", new BigDecimal(5));
-        BigDecimal result = new Calculator().calculate(expression, params);
+        BigDecimal result = new ArithmeticCalculator().calculate(expression, params);
         System.out.println(result.toString());
     }
 }

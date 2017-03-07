@@ -1,4 +1,4 @@
-package com.wecash.calculate;
+package com.wecash.calculate.arithmetic;
 
 
 import com.alibaba.fastjson.JSON;
@@ -12,24 +12,30 @@ import java.util.Stack;
 /**
  * Created by hh on 2017/2/27.
  */
-public class Calculator {
+public class ArithmeticCalculator {
 
     private Stack<String> numberStack;
 
-    private Stack<Operator> operatorStack;
+    private Stack<ArithmeticOperator> operatorStack;
 
     private Map<String, BigDecimal> params;
 
-    public Calculator() {
+    public ArithmeticCalculator() {
         numberStack = new Stack<String>();
-        operatorStack = new Stack<Operator>();
+        operatorStack = new Stack<ArithmeticOperator>();
+    }
+
+    public void clear() {
+        this.numberStack.clear();
+        this.operatorStack.clear();
+        this.params.clear();
     }
 
     public BigDecimal calculate(String expression, Map<String, BigDecimal> params) {
         this.params = params;
         scan(expression);
         while (!operatorStack.empty()) {
-            Operator op = operatorStack.pop();
+            ArithmeticOperator op = operatorStack.pop();
             int opCnt = op.getOpCnt();
             String[] args = new String[opCnt];
             for (int i = 0; i < opCnt; i++) {
@@ -40,7 +46,7 @@ public class Calculator {
         return params.get(numberStack.peek());
     }
 
-    private void compute(Operator op, String[] args) {
+    private void compute(ArithmeticOperator op, String[] args) {
         BigDecimal[] input = new BigDecimal[args.length];
         for(int i = 0; i < args.length; i++) {
             input[i] = params.get(args[i]);
@@ -52,7 +58,7 @@ public class Calculator {
                 + ",operatorStack:" + JSON.toJSONString(operatorStack) + ",params:" + JSON.toJSONString(params));
     }
 
-    private String packageKey(Operator op, String[] args) {
+    private String packageKey(ArithmeticOperator op, String[] args) {
         StringBuilder key = new StringBuilder(op.getSymbol());
         for(String str : args) {
             key.append("_").append(str);
@@ -64,7 +70,7 @@ public class Calculator {
         StringBuilder word = new StringBuilder(20);
         for (int i = 0; i < expression.length(); i++) {
             final char chr = expression.charAt(i);
-            Operator operator = Operator.toOperator(chr);
+            ArithmeticOperator operator = ArithmeticOperator.toOperator(chr);
             if (null != operator) {
                 boolean isNewAdded = newNumber(word);
                 newOperator(operator);
@@ -94,14 +100,14 @@ public class Calculator {
         return newAdded;
     }
 
-    private void newOperator(Operator operator) {
+    private void newOperator(ArithmeticOperator operator) {
         if (operatorStack.empty()) {
             operatorStack.push(operator);
-        } else if (operator.equals(Operator.BraLeft)) {
+        } else if (operator.equals(ArithmeticOperator.BraLeft)) {
             operatorStack.push(operator);
-        } else if (operator.equals(Operator.BraRight)) {
-            Operator op = operatorStack.pop();
-            while (!op.equals(Operator.BraLeft)) {
+        } else if (operator.equals(ArithmeticOperator.BraRight)) {
+            ArithmeticOperator op = operatorStack.pop();
+            while (!op.equals(ArithmeticOperator.BraLeft)) {
                 int opCnt = op.getOpCnt();
                 String[] args = new String[opCnt];
                 for (int i = 0; i < opCnt; i++) {
@@ -111,12 +117,12 @@ public class Calculator {
                 op = operatorStack.pop();
             }
         } else {
-            if (operatorStack.peek().equals(Operator.BraLeft)) {
+            if (operatorStack.peek().equals(ArithmeticOperator.BraLeft)) {
                 operatorStack.push(operator);
             } else if (operatorStack.peek().getPri() > operator.getPri()) {
                 operatorStack.push(operator);
             } else {
-                Operator op = operatorStack.pop();
+                ArithmeticOperator op = operatorStack.pop();
                 int opCnt = op.getOpCnt();
                 String[] args = new String[opCnt];
                 for (int i = 0; i < opCnt; i++) {
