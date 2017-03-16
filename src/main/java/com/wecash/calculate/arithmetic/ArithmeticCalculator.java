@@ -2,27 +2,31 @@ package com.wecash.calculate.arithmetic;
 
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.wecash.calculate.CalculateParam;
+import com.wecash.calculate.Calculator;
 import com.wecash.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 
-import java.util.Map;
 import java.util.Stack;
 
 /**
  * Created by hh on 2017/2/27.
  */
-public class ArithmeticCalculator {
+public class ArithmeticCalculator implements Calculator {
+    public static final Integer DEFAULT_SCALE_LENGTH = 2;
 
     private Stack<String> numberStack;
 
     private Stack<ArithmeticOperator> operatorStack;
 
-    private Map<String, BigDecimal> params;
+    private JSONObject params;
 
     public ArithmeticCalculator() {
         numberStack = new Stack<String>();
         operatorStack = new Stack<ArithmeticOperator>();
+        params = new JSONObject();
     }
 
     public void clear() {
@@ -31,9 +35,9 @@ public class ArithmeticCalculator {
         this.params.clear();
     }
 
-    public BigDecimal calculate(String expression, Map<String, BigDecimal> params) {
-        this.params = params;
-        scan(expression);
+    public String calculate(CalculateParam calculateParam) {
+        this.params = JSON.parseObject(calculateParam.getParams());
+        scan(calculateParam.getExpression());
         while (!operatorStack.empty()) {
             ArithmeticOperator op = operatorStack.pop();
             int opCnt = op.getOpCnt();
@@ -43,13 +47,19 @@ public class ArithmeticCalculator {
             }
             compute(op, args);
         }
-        return params.get(numberStack.peek());
+        return scale(calculateParam).toPlainString();
+    }
+
+    private BigDecimal scale(CalculateParam calculateParam) {
+        int scale = calculateParam.getScale() == null ? DEFAULT_SCALE_LENGTH : calculateParam.getScale();
+        int roundingMode = calculateParam.getRoundingMode() == null ? BigDecimal.ROUND_HALF_UP : calculateParam.getRoundingMode();
+        return new BigDecimal(params.get(numberStack.peek()).toString()).setScale(scale, roundingMode);
     }
 
     private void compute(ArithmeticOperator op, String[] args) {
         BigDecimal[] input = new BigDecimal[args.length];
         for(int i = 0; i < args.length; i++) {
-            input[i] = params.get(args[i]);
+            input[i] = new BigDecimal(params.get(args[i]).toString());
         }
         String key = packageKey(op, args);
         params.put(packageKey(op, args), op.compute(input));
