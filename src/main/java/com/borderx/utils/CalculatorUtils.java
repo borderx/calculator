@@ -1,4 +1,4 @@
-package com.wecash.utils;
+package com.borderx.utils;
 
 import java.util.UUID;
 import java.util.regex.Pattern;

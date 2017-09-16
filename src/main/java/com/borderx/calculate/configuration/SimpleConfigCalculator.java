@@ -1,9 +1,9 @@
-package com.wecash.calculate.configuration;
+package com.borderx.calculate.configuration;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wecash.calculate.CalculateParam;
-import com.wecash.calculate.Calculator;
+import com.borderx.calculate.CalculateParam;
+import com.borderx.calculate.Calculator;
 import org.apache.commons.lang.StringUtils;
 
 /**

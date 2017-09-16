@@ -1,4 +1,4 @@
-package com.wecash.calculate;
+package com.borderx.calculate;
 
 import java.io.Serializable;
 

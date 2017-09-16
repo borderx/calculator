@@ -1,11 +1,11 @@
-package com.wecash.calculate.arithmetic;
+package com.borderx.calculate.arithmetic;
 
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.wecash.calculate.CalculateParam;
-import com.wecash.calculate.Calculator;
-import com.wecash.utils.CalculatorUtils;
+import com.borderx.calculate.CalculateParam;
+import com.borderx.calculate.Calculator;
+import com.borderx.utils.CalculatorUtils;
 
 import java.math.BigDecimal;
 

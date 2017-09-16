@@ -1,4 +1,4 @@
-package com.wecash.calculate;
+package com.borderx.calculate;
 
 /**
  * Created by hh on 2017/3/7.
