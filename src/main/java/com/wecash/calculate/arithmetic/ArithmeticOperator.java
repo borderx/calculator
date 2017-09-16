@@ -138,7 +138,7 @@ public enum ArithmeticOperator {
             double arg1 = ops[0].doubleValue();
             double arg2 = ops[1].doubleValue();
             double res = Math.pow(arg1, arg2);
-            return BigDecimal.valueOf(res);
+            return new BigDecimal(String.valueOf(res));
         }
     };
 
